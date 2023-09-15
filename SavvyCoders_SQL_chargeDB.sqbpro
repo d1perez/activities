@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/Lenovo/Desktop/HW7.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="150"/><column_width id="3" width="3591"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,8:mainevCharge"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="EVIncentivesbyState" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="188"/><column index="2" value="300"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="evCharge" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="155"/><column index="2" value="152"/><column index="3" value="115"/><column index="4" value="195"/><column index="5" value="195"/><column index="6" value="157"/><column index="7" value="143"/><column index="8" value="234"/><column index="9" value="252"/><column index="10" value="148"/><column index="11" value="143"/><column index="12" value="140"/><column index="13" value="114"/><column index="14" value="151"/><column index="15" value="165"/><column index="16" value="184"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="evRegistry" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="137"/><column index="2" value="189"/><column index="3" value="183"/><column index="4" value="97"/><column index="5" value="178"/><column index="6" value="171"/><column index="7" value="158"/><column index="8" value="173"/><column index="9" value="300"/><column index="10" value="215"/><column index="11" value="169"/><column index="12" value="132"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">-- SELECT userId, ROUND(AVG(chargetimehrs),1) as &quot;avgChargetime&quot;
+-- from EVCharging
+-- group by userid 
+-- order by avg(&quot;chargetimehrs&quot;)DESC
+-- 
+-- SELECT userId, sum(&quot;chargetimehrs&quot;)
+-- from EVCharging
+
+-- Each Charging location has multiple charging stations. Using the EVCharging table, Reveal the locationId and Find out how many charging stations there are at each Charging location and rename this column numStations. Order the result set so the location with the most stations appears first. Limit the output to 20.
+-- Using the EVCharging table, I would like to know the average power consumption per user. Please list the user identification and rename the aggregation column to avgPower. Round this number to 2 decimal places.
+-- Using the EVCharging table, Find the total power output from each charging location. You you list the location identification and rename other column to totalpowerKWH Round the answer to 2 decimal points and list the out put in highest to lowest order. Limit the order to the top 10.
+
+-- SELECT locationId, COUNT(DISTINCT stationId) as numstations
+-- FROM EVCharging
+-- GROUP BY locationId 
+-- order by 2 DESC
+-- LIMIT 20
+-- 
+-- SELECT userid,round(avg(kwhtotal),2)as 'avgpower'
+-- FROM EVCharging
+-- group by userid
+
+-- SELECT 	locationId, round(SUM('kwhtotal'),2) as &quot;totalpowerkwh&quot;
+-- from EVCharging
+-- 
+-- SELECT weekday
+-- , userid
+-- , round(sum(kwhtotal),2)
+-- from EVCharging
+-- group by weekday, userid
+-- order by 3 DESC
+-- limit 15
+-- 
+-- SELECT userid, sum(chargetimehrs)
+-- from EVCharging
+-- GROUP by userId
+-- having sum(chargetimehrs)&gt;10
+
+-- SELECT stationId, count(*) as numuses
+-- FROM EVCharging
+-- group by stationId
+-- having count(*) &gt; 100
+-- order by 2 desc;
+-- 
+-- select userid, round(sum(kwhtotal),2) as 'totalpower'
+-- from EVCharging
+-- group by userId
+-- having sum (kwhTotal) &gt; 1000
+-- order by totalpower desc
+-- 
+-- SELECT userId, SUM(ChargeTimeHrs) AS totalTimeHrs, SUM(kwhTotal) AS totalPwrKWH
+-- FROM evCharging
+-- GROUP BY userId
+-- ORDER BY totalPwrKWH DESC
+-- LIMIT 5
+-- 
+-- SELECT userId,SUM(chargeTimeHrs) AS totalTimeHrs, ROUND(SUM(kwhTotal),2) AS totalPwrKWH
+-- FROM EVCharging
+-- WHERE weekday = &quot;Thu&quot;
+-- GROUP BY userId
+-- ORDER BY totalPwrKWH DESC
+-- LIMIT 25
+-- -- 
+-- SELECT stationId, SUM(chargeTimeHrs) AS sumTotalHrs
+-- FROM evCharging
+-- GROUP BY stationId
+-- HAVING sumTotalHrs &lt; 5
+-- ORDER BY sumTotalHrs ASC
+-- 
+-- SELECT dimuser.carMake, factCharge.*
+-- from factCharge
+-- inner join dimUser
+-- ON factCharge.userId = dimuser.userid
+-- limit 50;
+-- 
+-- SELECT 
+-- 	du.carMake
+-- 	,count(*) as 'numcharges'
+-- 	,round(SUM(fc.chargeTimeHrs),2) as 'timecharging'
+-- FROM factCharge as fc
+-- INNER JOIN dimUser as du
+-- 	ON fc.userid = du.userId
+-- GROUP BY du.carMake
+-- ORDER BY 3 DESC
+-- 
+-- SELECT
+-- 	
+-- INNER JOIN
+-- GROUP BY
+-- ORDER BY
+-- 
+-- SELECT
+-- 	
+-- INNER JOIN
+-- GROUP BY
+-- ORDER BY
+
+-- SELECT dimday.dayOfWeek, ROUND(avg(factCharge.chargeTimeHrs),2)
+-- FROM factCharge
+-- INNER JOIN dimDay 
+-- 	ON factCharge.dayid = dimday.dateKey
+-- ORDER BY 2 DESC
+-- 
+-- SELECT dimUser.appPlatform, COUNT(sessionID) as numCharges
+-- FROM factCharge
+-- INNER JOIN dimUser
+-- ON factCharge.userId = dimUser.userId
+-- GROUP BY appPlatform
+-- ORDER by numCharges DESC
+
+SELECT 
+FROM
+INNER JOIN</sql><sql name="HW7">-- SELECT ModelYear, Make, Model
+-- FROM EVregistry
+-- 
+-- SELECT DISTINCT ElectricVehicleType
+-- FROM evRegistry 
+
+-- SELECT ElectricVehicleType
+-- FROM evRegistry
+-- WHERE ElectricVehicleType = 'Battery Electric Vehicle (BEV)'
+
+-- SELECT Make, Model
+-- FROM evRegistry
+-- WHERE BaseMSRP BETWEEN 20000 AND 35000
+
+-- SELECT Make, Model, ElectricVehicleType
+-- FROM evRegistry
+-- WHERE VIN LIKE '%3E1EA1J'
+
+-- SELECT ModelYear, Make, Model, ElectricVehicleType, ElectricRange 
+-- FROM evRegistry
+-- WHERE Make = 'TESLA' OR Make = 'CHEVROLET' 
+-- ORDER BY Make, ModelYear DESC 
+
+-- SELECT stationId, COUNT(sessionId)
+-- FROM EVCharge
+-- GROUP BY stationId
+-- ORDER BY COUNT(sessionId) DESC
+-- LIMIT 5
+
+-- SELECT sessionId, COUNT(sessionId)
+-- FROM evCharge
+-- GROUP BY stationId
+-- ORDER BY count(sessionID) DESC
+-- LIMIT 5
+-- 
+-- SELECT userId
+-- 	, MIN(chargeTimeHrs)
+-- 	, MAX(ChargeTimeHrs)
+-- FROM evCharge
+-- WHERE chargeTimeHrs &gt; 1
+-- HAVING userId
+-- 	,MIN(chargeTimeHrs)
+-- 	,MAX(ChargeTimeHrs)
+-- ORDER BY chargeTimeHrs
+
+SELECT userId
+	, MIN(ChargeTimeHrs) as minTime
+	, MAX(ChargeTimeHrs) as maxTime
+FROM evCharge
+GROUP BY userId
+HAVING SUM(chargeTimeHrs) &gt; 0.5
+ORDER BY minTime, maxTime
+</sql><current_tab id="1"/></tab_sql></sqlb_project>
